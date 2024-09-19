@@ -4,6 +4,7 @@ package vistas;
 import java.awt.Component;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -143,6 +144,11 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         jLabel11.setText("Rubro");
 
         JCRUBRO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        JCRUBRO.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCRUBROItemStateChanged(evt);
+            }
+        });
         JCRUBRO.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JCRUBROMouseClicked(evt);
@@ -367,6 +373,12 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_JTcodigoActionPerformed
 
+    private void JCRUBROItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCRUBROItemStateChanged
+        
+            
+            validarCamposVacios(JPANEL2);
+    }//GEN-LAST:event_JCRUBROItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBACTUALIZAR;
@@ -392,7 +404,7 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    //metodo para validar campos
+    //metodo para validar campos , todos los campos debebn estar llenos para buscar el producto
     public boolean validarCamposVacios(JPanel  jpanel) {
     boolean valido = true;
 
@@ -403,13 +415,15 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(jpanel, "Los campos no pueden estar vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
                 caja.requestFocus();
                 valido = false;
+                break;
             }
         } else if (c instanceof JComboBox) {
             JComboBox<?> combo = (JComboBox<?>) c;
-            if (combo.getSelectedIndex() == -1) {
+            if (combo.getSelectedIndex()== -1 ) {
                 JOptionPane.showMessageDialog(jpanel, "Seleccione un rubro.", "Error", JOptionPane.ERROR_MESSAGE);
                 combo.requestFocus();
                 valido = false;
+                break;
             }
         } else if (c instanceof JSpinner) {
             JSpinner spinner = (JSpinner) c;
@@ -422,7 +436,8 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
     }
 
     return valido;
-}  //metodo para vaciar campos//
+}  //metodo para vaciar campos, puede servir para el boton guardar o actualizar,deues de guardar  
+//deja los campos en blanco//
 
      public void vaciarCampos(JPanel jpanel) {
     for (Component c : jpanel.getComponents()) {
@@ -437,7 +452,7 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
             spinner.setValue(1); 
         
         }
-    }
+    } 
      
      }
 }

@@ -43,6 +43,7 @@ public class Menu extends javax.swing.JFrame {
         );
 
         JMENUADMI.setText("Administración");
+        JMENUADMI.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         JMENUADMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMENUADMIActionPerformed(evt);
@@ -61,6 +62,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(JMENUADMI);
 
         JMENUCONSULTA.setText("Consultas");
+        JMENUCONSULTA.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         JMENUCONSULTA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JMENUCONSULTAActionPerformed(evt);
