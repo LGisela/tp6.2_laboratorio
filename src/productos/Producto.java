@@ -1,19 +1,16 @@
-
-
 package productos;
-
-
-
 
 public class Producto implements Comparable<Producto> {
     private int codigo;
     private String descripcion;
-    private double precio;
+    private int precio;
     private int stock;
-    private String rubro;
+    private Categoria rubro;
 
-    
-    public Producto(int codigo, String descripcion, double precio, int stock, String rubro) {
+    public Producto() {
+    }
+
+    public Producto(int codigo, String descripcion, int precio, int stock, Categoria rubro) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -21,7 +18,6 @@ public class Producto implements Comparable<Producto> {
         this.rubro = rubro;
     }
 
-   
     public int getCodigo() {
         return codigo;
     }
@@ -42,7 +38,7 @@ public class Producto implements Comparable<Producto> {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(int precio) {
         this.precio = precio;
     }
 
@@ -54,13 +50,14 @@ public class Producto implements Comparable<Producto> {
         this.stock = stock;
     }
 
-    public String getRubro() {
+    public Categoria getRubro() {
         return rubro;
     }
 
-    public void setRubro(String rubro) {
+    public void setRubro(Categoria rubro) {
         this.rubro = rubro;
     }
+
 
     @Override
     public String toString() {
@@ -69,8 +66,14 @@ public class Producto implements Comparable<Producto> {
 
    
     @Override
-    public int compareTo(Producto otro) {
-        return Integer.compare(this.codigo, otro.codigo);
+    public int compareTo(Producto t) {
+        if (codigo==t.codigo) {
+            return 0;
+        } else if (codigo > t.codigo) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }
     
