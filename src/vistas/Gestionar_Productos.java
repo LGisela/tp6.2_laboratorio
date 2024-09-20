@@ -11,35 +11,42 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import productos.Categoria;
 import productos.Producto;
 
 public class Gestionar_Productos extends javax.swing.JInternalFrame {
 
-    DefaultTableModel tabla = new DefaultTableModel();
+    DefaultTableModel tabla = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
+    };
 
-    private static TreeSet<Producto> listaProductos = new TreeSet<>();
+    public static TreeSet<Producto> listaProductos = new TreeSet<>();
 
     public Gestionar_Productos() {
         initComponents();
         this.setResizable(false);
         llenarCombo();
-        String[] productos = {"Codigo", "Descripcion", "Precio", "Categoria", "Stock"};
-        tabla.setColumnIdentifiers(productos);
+        crearCabecera();
         jTable1.setModel(tabla);
-        JTFCodigo.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                String texto = JTFCodigo.getText();
-                if (texto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El campo no puede estar vacío.");
-                    JTFCodigo.requestFocus();
-                }
-            }
-        });
+//        JTFCodigo.addFocusListener(new FocusAdapter() {
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                String texto = JTFCodigo.getText();
+//                if (texto.isEmpty()) {
+//                    JOptionPane.showMessageDialog(null, "El campo no puede estar vacío.");
+//                    JTFCodigo.requestFocus();
+//                }
+//            }
+//        });
         JBGuardar.setEnabled(false);
+        JBActualizar.setEnabled(false);
+        JTFDescripcion.setEnabled(false);
+        JTFPrecio.setEnabled(false);
+        JCBRubro.setEnabled(false);
+        JSStock.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -152,6 +159,11 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         JBCerrar.setBackground(new java.awt.Color(0, 102, 51));
         JBCerrar.setForeground(new java.awt.Color(204, 255, 204));
         JBCerrar.setText("CERRAR");
+        JBCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCerrarActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("Stock");
 
@@ -366,6 +378,12 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
             JTFPrecio.setText(jTable1.getValueAt(fila, 2).toString());
             JCBRubro.setSelectedItem(jTable1.getValueAt(fila, 3));
             JSStock.setValue(jTable1.getValueAt(fila, 4));
+
+            JBActualizar.setEnabled(true);
+            JTFDescripcion.setEnabled(true);
+            JTFPrecio.setEnabled(true);
+            JCBRubro.setEnabled(true);
+            JSStock.setEnabled(true);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -432,6 +450,10 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         JTFPrecio.setText("");
         JSStock.setValue(0);
         JBGuardar.setEnabled(true);
+        JTFDescripcion.setEnabled(true);
+        JTFPrecio.setEnabled(true);
+        JCBRubro.setEnabled(true);
+        JSStock.setEnabled(true);
     }//GEN-LAST:event_JBNuevoActionPerformed
 
     private void JBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBGuardarActionPerformed
@@ -449,7 +471,15 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "El precio agregado es incorrecto.");
         } finally {
+            JTFCodigo.setText("");
+            JTFDescripcion.setText("");
+            JTFPrecio.setText("");
+            JSStock.setValue(0);
             JBGuardar.setEnabled(false);
+            JTFDescripcion.setEnabled(false);
+            JTFPrecio.setEnabled(false);
+            JCBRubro.setEnabled(false);
+            JSStock.setEnabled(false);
         }
 
     }//GEN-LAST:event_JBGuardarActionPerformed
@@ -483,6 +513,15 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Se actualizo correctamente.");
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "El precio agregado es incorrecto.");
+            } finally {
+                JTFCodigo.setText("");
+                JTFDescripcion.setText("");
+                JTFPrecio.setText("");
+                JSStock.setValue(0);
+                JTFDescripcion.setEnabled(false);
+                JTFPrecio.setEnabled(false);
+                JCBRubro.setEnabled(false);
+                JSStock.setEnabled(false);
             }
 
         }
@@ -518,6 +557,11 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_JBEliminarActionPerformed
+
+    private void JBCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCerrarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_JBCerrarActionPerformed
     public void llenarCombo() {
         for (Categoria cat : Categoria.values()) {
             JCBCategorias.addItem(cat);
@@ -602,5 +646,14 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
             }
         }
 
+    }
+
+    private void crearCabecera() {
+        tabla.addColumn("Código");
+        tabla.addColumn("Descripción");
+        tabla.addColumn("Precio");
+        tabla.addColumn("Categoría");
+        tabla.addColumn("Stock");
+        jTable1.setModel(tabla);
     }
 }
