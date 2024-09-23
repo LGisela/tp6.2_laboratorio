@@ -1,13 +1,9 @@
 package vistas;
 
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import productos.Producto;
 
-/**
- *
- * @author HP-PAVILION
- */
+
 public class listadoporprecio extends javax.swing.JInternalFrame {
 
     DefaultTableModel tabla = new DefaultTableModel() {
@@ -33,7 +29,6 @@ public class listadoporprecio extends javax.swing.JInternalFrame {
         JTPrecioMax = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTablaPrecio = new javax.swing.JTable();
-        JBBUSCAR = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 51, 51));
         setClosable(true);
@@ -82,8 +77,6 @@ public class listadoporprecio extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(JTablaPrecio);
 
-        JBBUSCAR.setText("BUSCAR");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,10 +96,6 @@ public class listadoporprecio extends javax.swing.JInternalFrame {
                         .addGap(0, 86, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(JBBUSCAR)
-                .addGap(8, 8, 8))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
@@ -122,9 +111,7 @@ public class listadoporprecio extends javax.swing.JInternalFrame {
                     .addComponent(JTPrecioMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(JTPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(JBBUSCAR)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89))
         );
@@ -137,23 +124,22 @@ public class listadoporprecio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JTPrecioMinActionPerformed
 
     private void JTPrecioMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTPrecioMaxActionPerformed
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_JTPrecioMaxActionPerformed
 
     private void JTPrecioMinKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPrecioMinKeyReleased
-        //validarCamposPrecios();
+        
         filtrarPorPrecios();
     }//GEN-LAST:event_JTPrecioMinKeyReleased
 
     private void JTPrecioMaxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTPrecioMaxKeyReleased
-        //validarCamposPrecios();
+  
         filtrarPorPrecios();
 
     }//GEN-LAST:event_JTPrecioMaxKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBBUSCAR;
     private javax.swing.JTextField JTPrecioMax;
     private javax.swing.JTextField JTPrecioMin;
     private javax.swing.JTable JTablaPrecio;
@@ -163,22 +149,6 @@ public class listadoporprecio extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-// private boolean validarCamposPrecios() {
-//        String precioMinimo = JTPrecioMin.getText().trim();
-//        String precioMaximo = JTPrecioMax.getText().trim();
-//
-//        if (precioMinimo.isEmpty() && precioMaximo.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Los campos de precio mínimo y máximo no pueden estar vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        }
-//
-//        if (!precioMinimo.matches("\\d+(\\.\\d+)?") || !precioMaximo.matches("\\d+(\\.\\d+)?")) {
-//            JOptionPane.showMessageDialog(this, "Por favor, ingrese solo números en los campos de precio.", "Error", JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        }
-//
-//        return true;
-//    }
     private void filtrarPorPrecios() {
         tabla = (DefaultTableModel) JTablaPrecio.getModel();
         tabla.setRowCount(0);
@@ -193,7 +163,6 @@ public class listadoporprecio extends javax.swing.JInternalFrame {
                 }
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese solo números en los campos de precio.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+             }
     }
 }

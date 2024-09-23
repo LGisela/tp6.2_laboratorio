@@ -3,14 +3,14 @@ package productos;
 public class Producto implements Comparable<Producto> {
     private int codigo;
     private String descripcion;
-    private int precio;
+    private double precio;
     private int stock;
     private Categoria rubro;
 
     public Producto() {
     }
 
-    public Producto(int codigo, String descripcion, int precio, int stock, Categoria rubro) {
+    public Producto(int codigo, String descripcion, double precio, int stock, Categoria rubro) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -38,7 +38,7 @@ public class Producto implements Comparable<Producto> {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

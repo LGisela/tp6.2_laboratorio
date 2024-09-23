@@ -3,10 +3,6 @@ package vistas;
 import javax.swing.table.DefaultTableModel;
 import productos.Producto;
 
-/**
- *
- * @author HP-PAVILION
- */
 public class listadopornombre extends javax.swing.JInternalFrame {
 
     DefaultTableModel tabla = new DefaultTableModel() {
@@ -31,7 +27,6 @@ public class listadopornombre extends javax.swing.JInternalFrame {
         JTFDescripcion = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTNombre = new javax.swing.JTable();
-        JBBUSCAR = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 204, 255));
         setClosable(true);
@@ -66,16 +61,10 @@ public class listadopornombre extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(JTNombre);
 
-        JBBUSCAR.setText("BUSCAR");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(JBBUSCAR)
-                .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -98,9 +87,7 @@ public class listadopornombre extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JBBUSCAR)
-                .addGap(13, 13, 13)
+                .addGap(42, 42, 42)
                 .addComponent(JTFDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,7 +111,6 @@ public class listadopornombre extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBBUSCAR;
     private javax.swing.JTextField JTFDescripcion;
     private javax.swing.JTable JTNombre;
     private javax.swing.JLabel jLabel3;
@@ -132,12 +118,5 @@ public class listadopornombre extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
-    //se puede usar en el boton buscar, si el campo no esta vacio
-    private boolean validarCampoVacio() {
-        if (JTFDescripcion.getText().trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "El campo de descripción no puede estar vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
-    }
+   
 }

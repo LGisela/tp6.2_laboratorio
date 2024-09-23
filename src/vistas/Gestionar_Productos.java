@@ -1,8 +1,6 @@
 package vistas;
 
 import java.awt.Component;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 import java.util.TreeSet;
 
@@ -31,16 +29,6 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         llenarCombo();
         crearCabecera();
         jTable1.setModel(tabla);
-//        JTFCodigo.addFocusListener(new FocusAdapter() {
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//                String texto = JTFCodigo.getText();
-//                if (texto.isEmpty()) {
-//                    JOptionPane.showMessageDialog(null, "El campo no puede estar vacío.");
-//                    JTFCodigo.requestFocus();
-//                }
-//            }
-//        });
         JBGuardar.setEnabled(false);
         JBActualizar.setEnabled(false);
         JTFDescripcion.setEnabled(false);
@@ -462,14 +450,14 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         try {
             int codigo = Integer.parseInt(JTFCodigo.getText());
             String descripcion = JTFDescripcion.getText();
-            int precio = Integer.parseInt(JTFPrecio.getText());
+            double precio = Double.parseDouble(JTFPrecio.getText());
             Categoria rubro = (Categoria) JCBRubro.getSelectedItem();
             int stock = (Integer) JSStock.getValue();
             Producto prod = new Producto(codigo, descripcion, precio, stock, rubro);
             listaProductos.add(prod);
             tabla.addRow(new Object[]{codigo, descripcion, precio, rubro, stock});
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El precio agregado es incorrecto.");
+            JOptionPane.showMessageDialog(null, "Valor código y/o precio ingresado incorrecto/s.");
         } finally {
             JTFCodigo.setText("");
             JTFDescripcion.setText("");
@@ -492,7 +480,7 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
             try {
                 int codigo = Integer.parseInt(JTFCodigo.getText());
                 String descripcion = JTFDescripcion.getText();
-                int precio = Integer.parseInt(JTFPrecio.getText());
+                double precio = Double.parseDouble(JTFPrecio.getText());
                 Categoria rubro = (Categoria) JCBRubro.getSelectedItem();
                 int stock = (Integer) JSStock.getValue();
 
@@ -510,9 +498,9 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
                 jTable1.setValueAt(precio, fila, 2);
                 jTable1.setValueAt(rubro, fila, 3);
                 jTable1.setValueAt(stock, fila, 4);
-                JOptionPane.showMessageDialog(null, "Se actualizo correctamente.");
+                JOptionPane.showMessageDialog(null, "Se actualizó correctamente.");
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "El precio agregado es incorrecto.");
+                JOptionPane.showMessageDialog(null, "Valor código y/o precio ingresado incorrecto/s.");
             } finally {
                 JTFCodigo.setText("");
                 JTFDescripcion.setText("");
@@ -530,17 +518,27 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
         // TODO add your handling code here:
         tabla.setRowCount(0);
-        int cod = Integer.parseInt(JTFCodigo.getText());
-        for (Producto prod : listaProductos) {
-            if (prod.getCodigo() == cod) {
-                tabla.addRow(new Object[]{prod.getCodigo(), prod.getDescripcion(), prod.getPrecio(), prod.getRubro(), prod.getStock()});
+        try{
+            int cod = Integer.parseInt(JTFCodigo.getText());
+            for (Producto prod : listaProductos) {
+                if (prod.getCodigo() == cod) {
+                    tabla.addRow(new Object[]{prod.getCodigo(), prod.getDescripcion(), prod.getPrecio(), prod.getRubro(), prod.getStock()});
+                }
             }
+            if (tabla.getRowCount() == 0){
+                JOptionPane.showMessageDialog(null, "El código del producto ingresado no se encuentra");
+
+            }
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Asegúrese de ingresar el código correctamente");
         }
+       
 
     }//GEN-LAST:event_JBBuscarActionPerformed
 
     private void JBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEliminarActionPerformed
         // TODO add your handling code here:
+        int aux = 0;
         int fila = jTable1.getSelectedRow();
         if (fila != -1) {
             int codigo = Integer.parseInt(JTFCodigo.getText());
@@ -549,17 +547,17 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
                     listaProductos.remove(prod);
                     //tabla.setRowCount(0);
                     ((DefaultTableModel) jTable1.getModel()).removeRow(fila);
-                    JOptionPane.showMessageDialog(null, "El producto se elimino correctamente.");
+                    JOptionPane.showMessageDialog(null, "El producto se eliminó correctamente.");
+                    aux++;
                     break;
-                } else {
-                    JOptionPane.showMessageDialog(null, "El producto no se encontro.");
                 }
             }
+            if (aux == 0) JOptionPane.showMessageDialog(null, "El producto ingresado no se encontró");
         }
     }//GEN-LAST:event_JBEliminarActionPerformed
 
     private void JBCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCerrarActionPerformed
-        // TODO add your handling code here:
+  
         dispose();
     }//GEN-LAST:event_JBCerrarActionPerformed
     public void llenarCombo() {
@@ -596,7 +594,6 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    //metodo para validar campos , todos los campos debebn estar llenos para buscar el producto
     public boolean validarCamposVacios(JPanel jpanel) {
         boolean valido = true;
 
@@ -620,7 +617,7 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
             } else if (c instanceof JSpinner) {
                 JSpinner spinner = (JSpinner) c;
                 if ((Integer) spinner.getValue() <= 0) {
-                    JOptionPane.showMessageDialog(jpanel, "El stock debe ser mayor a 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                   //JOptionPane.showMessageDialog(jpanel, "El stock debe ser mayor a 0.", "Error", JOptionPane.ERROR_MESSAGE);
                     spinner.requestFocus();
                     valido = false;
                 }
@@ -628,8 +625,7 @@ public class Gestionar_Productos extends javax.swing.JInternalFrame {
         }
 
         return valido;
-    }  //metodo para vaciar campos, puede servir para el boton guardar o actualizar,deues de guardar  
-//deja los campos en blanco//
+    } 
 
     public void vaciarCampos(JPanel jpanel) {
         for (Component c : jpanel.getComponents()) {
